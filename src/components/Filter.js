@@ -4,7 +4,7 @@ function Filter({
   onCategoryChange,
   selectedCategory,
   onSearchChange,
-  keyWord,
+  search,
 }) {
   return (
     <div className="Filter">
@@ -13,7 +13,7 @@ function Filter({
         name="search"
         placeholder="Search..."
         onChange={onSearchChange}
-        value={keyWord}
+        value={search}
       />
       <select
         name="filter"
