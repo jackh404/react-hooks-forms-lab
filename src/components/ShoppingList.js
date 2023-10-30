@@ -3,24 +3,29 @@ import ItemForm from "./ItemForm";
 import Filter from "./Filter";
 import Item from "./Item";
 
-function ShoppingList({ items }) {
+function ShoppingList({ items, setItems }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [keyWord, setKeyWord] = useState("");
+  const [search, setSearch] = useState("");
 
   function handleCategoryChange(event) {
     setSelectedCategory(event.target.value);
   }
 
   function onSearchChange(event) {
-    setKeyWord(event.target.value);
+    setSearch(event.target.value);
+  }
+
+  function onItemFormSubmit(newItem) {
+    console.log(newItem);
+    setItems([...items, newItem]);
   }
 
   const itemsToDisplay = items.filter(item => {
-    console.log("does " + item.name + " contain " + keyWord);
-    console.log(item.name.toLowerCase().includes(keyWord.toLowerCase()));
+    // console.log("does " + item.name + " contain " + search);
+    // console.log(item.name.toLowerCase().includes(search.toLowerCase()));
     if (
       (selectedCategory === "All" || item.category === selectedCategory) &&
-      item.name.toLowerCase().includes(keyWord.toLowerCase())
+      item.name.toLowerCase().includes(search.toLowerCase())
     ) {
       return true;
     }
@@ -28,12 +33,12 @@ function ShoppingList({ items }) {
   });
   return (
     <div className="ShoppingList">
-      <ItemForm />
+      <ItemForm onItemFormSubmit={onItemFormSubmit} />
       <Filter
         onCategoryChange={handleCategoryChange}
         selectedCategory={selectedCategory}
         onSearchChange={onSearchChange}
-        keyWord={keyWord}
+        search={search}
       />
       <ul className="Items">
         {itemsToDisplay.map(item => (
